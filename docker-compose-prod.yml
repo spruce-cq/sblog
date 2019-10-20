@@ -1,0 +1,76 @@
+version: '3.7'
+
+services:
+  resource:
+    container_name: resource
+    build:
+      context: ./services/resource
+      dockerfile: Dockerfile-prod
+    # volumes:
+    #   - /sblog/services/resource/:/usr/src/app
+    # ports:
+    #   - 5001:5000
+    expose:
+      - 5000
+    environment:
+      - FLASK_APP=project/__init__.py
+      - APP_SETTING=production
+      - FLASK_ENV=production
+      - DATABASE_DEV_URL=mysql+cymysql://root:${MYSQL_DB_PASSWORD}@users-db:3306/users_dev
+      - DATABASE_TEST_URL=mysql+cymysql://root:${MYSQL_DB_PASSWORD}@users-db:3306/users_test
+      - DATABASE_URL=mysql+cymysql://root:${MYSQL_DB_PASSWORD}@users-db:3306/users_prod
+      - SECRET_KEY=${SECRET_KEY}
+    depends_on:
+      - users-db
+    links:
+      - users-db
+  
+  users-db:
+    container_name: users-db
+    build:
+      context: ./services/resource/project/db
+      dockerfile: Dockerfile
+    expose:
+      - 3306
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_DB_PASSWORD}
+    security_opt:
+      - seccomp:unconfined
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile-prod
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - resource
+      - client
+
+  client:
+    container_name: client
+    build:
+      context: ./services/client
+      dockerfile: Dockerfile-prod
+      args:
+      - NODE_ENV=production
+      - REACT_APP_RESOURCES_SERVICE_URL=${REACT_APP_RESOURCES_SERVICE_URL}
+    expose:
+      - 80
+    depends_on:
+      - resource
+
+  swagger:
+    container_name: swagger
+    build:
+      context: ./services/swagger
+      dockerfile: Dockerfile-prod
+    ports:
+      - 3007:8080
+    environment:
+      - URL=/swagger.json
+    depends_on:
+      - resource

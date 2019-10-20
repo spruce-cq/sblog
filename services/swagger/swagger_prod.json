@@ -1,0 +1,370 @@
+{
+    "info": {
+        "version": "0.0.1",
+        "description": "Swagger spec for documenting the resource service",
+        "title": "Resources Service"
+    },
+    "paths": {
+        "/auth/logout": {
+            "get": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged out."
+                    }
+                },
+                "summary": "Logs a user out"
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user-full"
+                            }
+                        }
+                    },
+                    "required": true,
+                    "description": "User to add"
+                },
+                "responses": {
+                    "200": {
+                        "description": "user object"
+                    }
+                },
+                "summary": "Creates a new user"
+            }
+        },
+        "/users/ping": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Will return 'pong!'"
+                    }
+                },
+                "summary": "Just a sanity check"
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user"
+                            }
+                        }
+                    },
+                    "required": true,
+                    "description": "User to log in"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged in"
+                    }
+                },
+                "summary": "Logs a user in"
+            }
+        },
+        "/auth/status": {
+            "get": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "user object"
+                    }
+                },
+                "summary": "Returns the logged in user's status"
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "user object"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "required": true,
+                        "description": "ID of user to fetch",
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "summary": "Returns a user based on a single user ID"
+            }
+        },
+        "/users": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user-full"
+                            }
+                        }
+                    },
+                    "required": true,
+                    "description": "User to add"
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User added"
+                    }
+                },
+                "summary": "Adds a new user"
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "user object"
+                    }
+                },
+                "summary": "Returns all users"
+            }
+        },
+        "/categories": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/category"
+                            }
+                        }
+                    },
+                    "required": true,
+                    "description": "Category to add"
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Category added"
+                    }
+                },
+                "summary": "Add a new category"
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Return all categories"
+                    }
+                }
+            }
+        },
+        "/categories/{id}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "category object"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "required": true,
+                        "description": "Id of category to fetch",
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "summary": "Return a category based on a single category ID"
+            },
+            "delete": {
+                "responses": {
+                    "202": {
+                        "description": "The category was deleted"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "required": true,
+                        "description": "Id of category to delete",
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "summary": "Category deleted"
+            }
+        },
+        "/articles": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/article"
+                            }
+                        }
+                    },
+                    "required": true,
+                    "description": "article to add"
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "201": "Article added"
+                },
+                "summary": "Add a new Article"
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Return all articles"
+                    }
+                }
+            }
+        },
+        "/articles/{id}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "article object"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "required": true,
+                        "description": "Id of article to fetch",
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "summary": "Return a article based on a single article ID"
+            },
+            "delete": {
+                "responses": {
+                    "202": {
+                        "description": "The article was deleted"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "required": true,
+                        "description": "Id of article to delete",
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "summary": "Article deleted"
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "http://121.41.60.50"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "scheme": "bearer",
+                "type": "http"
+            }
+        },
+        "schemas": {
+            "user-full": {
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            },
+            "user": {
+                "properties": {
+                    "password": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            },
+            "category": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "article": {
+                "properties": {
+                    "aid": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "body": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "integer",
+                        "minimun": 1
+                    }
+                },
+                "required": [
+                    "aid",
+                    "title",
+                    "body"
+                ],
+                "example": {
+                    "aid": 1,
+                    "title": "title1",
+                    "body": "body1",
+                    "category": 1
+                }
+            }
+        }
+    },
+    "openapi": "3.0.0"
+}
