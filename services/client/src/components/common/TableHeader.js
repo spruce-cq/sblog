@@ -21,11 +21,11 @@ export default function TableHeader({ columns, sortColumn, onSort } ){
 
     return (
         <thead>
-                            <tr>
-                                {columns.map(c => (
-                                    <th key={ c.path || c.key } onClick={() => setSort(c.path)} >{ c.label } { renderSortIcon(c) }</th>
-                                ))}
-                            </tr>
+            <tr>
+                {columns.map(c => (
+                    <th key={ c.path || c.key } onClick={() => setSort(c.path)} >{ c.label } { renderSortIcon(c) }</th>
+                ))}
+            </tr>
         </thead>
     )
 }

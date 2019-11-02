@@ -127,7 +127,7 @@ export function formatDate(dateStr) {
 } 
 
 export function transboolean(boolean) {
-    return boolean === true ? "Yes" : "No"
+    return boolean ? "Yes" : "No"
 }
 
 export function getGenres() {

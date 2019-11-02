@@ -9,7 +9,7 @@ from project.api.blog.models import Article
 from project.exceptions import BadRequest
 from project.utils import paint
 from project.utils.basemodel import db
-from project.utils.jsonenhancer import toJSON
+from project.utils.jsonenhancer import toDict
 
 
 article_paint = paint.Paint()
@@ -44,7 +44,7 @@ def get_all_articles():
     """Get all articles."""
     resp_obj = {
         'status': 'success',
-        'data': [toJSON(article) for article in Article.query.all()]
+        'data': [toDict(article) for article in Article.query.all()]
     }
     return jsonify(resp_obj), 200
 
@@ -57,7 +57,7 @@ def get_single_article(art_id):
         art_id, description='Invalid path params.')
     resp_obj = {
         'status': 'success',
-        'data': toJSON(article)
+        'data': toDict(article)
     }
     return jsonify(resp_obj), 200
 

@@ -92,7 +92,7 @@ export  class  ArticleEditor extends React.Component {
                             onChange={ this.handleChange } value={ this.state.article.category } options={ this.state.categories }/>
                     </form> 
                     <Editor editingCallback={ this.editingCallback } body={this.state.article.body } />
-                </  FormValidator>
+                </ FormValidator>
             </>
         )
     }

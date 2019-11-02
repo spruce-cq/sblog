@@ -78,12 +78,12 @@ class Articles extends Component {
         const { sortColumn, pageSize, currentPage } = this.state
 
         if (this.state.articles.length === 0)
-            return <p>There are no movies in the database.</p>
+            return <p>There are no articles in the database.</p>
         const { totalCount, articles } = this.filterArtilces()
         
         return (
             <div className="row">
-                <div className="col-2">
+                <div className="col col-lg-2">
                     <ListGroup items={ this.state.categories } onSelected={ this.handleCategorySelected }
                         selectedItemId={ this.state.selectedCategoryId }/>
                 </div>

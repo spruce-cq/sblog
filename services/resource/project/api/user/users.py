@@ -9,7 +9,7 @@ from project.api.utils import authenticate
 from project.exceptions import BadRequest, NotFound
 from project.utils.paint import Paint
 from project.utils.basemodel import db
-from project.utils.jsonenhancer import toJSON
+from project.utils.jsonenhancer import toDict
 
 
 users_paint = Paint()
@@ -65,7 +65,7 @@ def get_single_user(user_id):
     else:
         response_object = {
             'status': 'success',
-            'data': toJSON(user)
+            'data': toDict(user)
         }
         return jsonify(response_object), 200
 
@@ -76,7 +76,7 @@ def get_all_users():
     response_object = {
         'status': 'success',
         'data': {
-            'users': [toJSON(user) for user in User.query.all()]
+            'users': [toDict(user) for user in User.query.all()]
         }
     }
     return jsonify(response_object), 200

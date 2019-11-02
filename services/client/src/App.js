@@ -19,7 +19,7 @@ function App() {
 
     useEffect(() => {
         const userInfo = Auth.getUserInfo()
-        if (userInfo) {
+        if (userInfo && userInfo.sub.uid) {
             setUser(() => userInfo.sub.uid)
         }
     },[])
@@ -27,15 +27,15 @@ function App() {
     return (
         <>
         <ToastContainer />
-            <Navbar user={ user }/> 
+            <Navbar /> 
             <main className="container">
                 <Switch>
-                    <Route path="/login" component={ LoginForm } />
-                    <Route path="/logout" component={ Logout } />
-                    <Route path="/article" component={ Articles } exact={ true }/>
-                    <ProtectedRoute path="/article/:mode?/:id?" component={ ArticleEditor } />
+                    <Route path="/login" component={ LoginForm } exact/>
+                    <Route path="/logout" component={ Logout } exact />
+                    <Route path="/article" component={ Articles } />
+                    <ProtectedRoute path="/article/:mode?/:id?" component={ ArticleEditor } exact />
                     <Route path="/not-found" component={ NotFound } />
-                    <Redirect from="/" to="/article"  exact={ true } />
+                    <Redirect from="/" to="/article"  exact />
                     <Redirect to="/not-found" />
                 </Switch>
             </main>

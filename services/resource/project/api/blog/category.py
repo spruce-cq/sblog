@@ -9,7 +9,7 @@ from project.api.utils import authenticate
 from project.exceptions import BadRequest
 from project.utils import paint
 from project.utils.basemodel import db
-from project.utils.jsonenhancer import toJSON
+from project.utils.jsonenhancer import toDict
 
 
 category_paint = paint.Paint()
@@ -42,7 +42,7 @@ def get_all_categories():
     """Get all categoryies."""
     resp_obj = {
         'status': 'success',
-        'data': [toJSON(category) for category in Category.query.all()]
+        'data': [toDict(category) for category in Category.query.all()]
     }
     return jsonify(resp_obj), 200
 
@@ -59,7 +59,7 @@ def get_single_category_by(cate_id):
     category = Category.query.get_or_404(cate_id, resp_message)
     resp_obj = {
         'status': 'success',
-        'data': toJSON(category)
+        'data': toDict(category)
     }
     return jsonify(resp_obj), 200
 

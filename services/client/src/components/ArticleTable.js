@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from "react"
+import React from "react"
 import {  Link } from "react-router-dom";
 import { formatDate, transboolean } from "./fakerService";
 import Table from "./common/Table"
@@ -9,7 +9,7 @@ export default  function ArticleTable(props) {
 
     const columns = [
         { path: "title", label: "Title", content: (article) => <Link to={`/article/edit/${article.id}`}>{ article.title }</Link>},
-        { path: "category", label: "Category"},
+        { path: "category[1]", label: "Category"},
         { path: "timestamp", label: "Pubdate", wrapFunc: formatDate },
         { path: "status", label: "Status", wrapFunc: transboolean },
     ]
@@ -24,7 +24,7 @@ export default  function ArticleTable(props) {
     
     return (
         <>
-            {Auth.getUserInfo() && <Link to="/article/create" className="btn btn-primary mb-2">New Article</Link>}
+            {userInfo.sub.uid && <Link to="/article/create" className="btn btn-primary mb-2">New Article</Link>}
             <p>Showing { props.itemsCount } in the database.</p>
             <input className="form-control my-3" placeholder="Search..." onChange={ (e) => props.onChange(e.currentTarget.value) } />
             <Table columns={ columns } articles={ props.articles } sortColumn={ props.sortColumn } onSort={ props.onSort } />

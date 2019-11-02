@@ -11,7 +11,7 @@ from project.api.utils import authenticate
 from project.exceptions import BadRequest, NotFound
 from project.utils import paint
 from project.utils.basemodel import db
-from project.utils.jsonenhancer import toJSON
+from project.utils.jsonenhancer import toDict
 
 
 auth_paint = paint.Paint()
@@ -88,6 +88,6 @@ def get_user_status():
     user = User.query.filter_by(id=g.AuthInfo.uid).first()
     response_object = {
         'status': 'success',
-        'data': toJSON(user)
+        'data': toDict(user)
     }
     return jsonify(response_object), 200
